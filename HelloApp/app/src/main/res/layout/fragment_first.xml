@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FirstFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+
+                           <!-- 나 자신_달라붙을 곳 이렇게 생겼다. -->
+        <Button
+            android:id="@+id/button_first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="helloo"
+            app:layout_constraintBottom_toTopOf="@id/button_first"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- ConstraintLayout
+         안드로이드에서 반응형 화면을 구현하기 위한 Layout 이다.
+         이전에는 RelativeLayout 을 사용했는데, 최근에는 바뀌는 추세이다.
+        -->
+        <EditText
+            android:id="@+id/textview_first"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="안녕"
+            android:textSize="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_first" />
+
+    <!--
+    match_parent : 나를 감싸는 부모창의 크기만큼 늘려라
+    wrap_content : 내가 포함하고 있는 text등의 크기만큼만 늘려서 유지해라
+
+    안드로이드 단위
+    1. px : 고정크기, 절대단위
+    2. dpi : 화면 1인치에 들어가는 픽셀단위
+    3. dp : 화면 크기에 관계없이 고정된 크기, 밀도 독립 픽셀단위라고도 함.
+    4. sp : 시스템의 글꼴 크기에 따라 변동되는 단위, 스케일 독립 단위라고 함.
+    -->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
