@@ -2,16 +2,26 @@ package com.callor.word;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.callor.word.model.WordVO;
+import com.callor.word.model.WordViewModel;
+import com.callor.word.model.WordViewModelFactory;
+
+import java.util.Random;
 
 /* Activity
    앱을 실행했을 때 보여지는 객체
@@ -23,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private int imageWidth = 0;
     private int imageHeight = 0;
 
+    private WordViewModel viewModel;
+
     // android 앱이 실행될 때 화면을 만들어주는 method
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +42,24 @@ public class MainActivity extends AppCompatActivity {
 
         //화면을 그리는데 필요한 요소가 있다.
         setContentView(R.layout.activity_main);
+
+        /* ViewModel 활용해
+        tbl_words 데이터베이스로부터 SELECT ALL 수행하라.
+         */
+        viewModel = new ViewModelProvider
+                .AndroidViewModelFactory(this.getApplication())
+                .create(WordViewModel.class);
+
+        viewModel.selectAll().observe(this,
+
+                //람다방식의 코드이다.
+                wordList -> {
+                 for(WordVO word : wordList) {
+                     Log.d("MAIN",word.getWord());
+                 }
+                });
+
+
 
         //activity main.xml 에 설정된 btn_size 위젯을 사용하기 위한 객체로 설정
         Button btn_size = findViewById(R.id.btn_size);
@@ -45,6 +75,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(view.getContext(),
                         "이미지 변경할래?",
                         Toast.LENGTH_SHORT).show();
+
+                String word = String.format("뿌니 %d", Math.floor(Math.random() * 100),0);
+                WordVO wordVO = new WordVO(0,word);
+                viewModel.insert(wordVO);
 
                 /* 버튼 클릭되면 이미지 사이즈 변경하는 방법
                    1. 디바이스 화면 해상도 알아야 한다.
