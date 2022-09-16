@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+
+    <!-- horizontal(가로) : html css 의 flex 와 같은 역할
+    LinearLayout 에 포함된 위젯들은 width 를 0px 로 설정하고
+    weight 를 적절한 비율로 만들면 쉽게 가득찬 layout 모양을 형상화할 수 있다.
+
+    vertical(세로) 비율 지정하는 것.
+    -->
+    <LinearLayout
+        android:id="@+id/input_form"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_margin="5px"
+            android:layout_weight="1"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txt_word"
+                android:hint="@string/txt_word_hint"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:id="@+id/btn_save"
+            android:text="@string/btn_save"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/word_list"
+        app:layout_constraintTop_toBottomOf="@id/input_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

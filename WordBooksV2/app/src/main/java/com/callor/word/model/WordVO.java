@@ -1,0 +1,50 @@
+package com.callor.word.model;
+
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "tbl_words")
+public class WordVO {
+
+        // seq 컬럼을 pk 로 지정하고, autoGenerate 하면 autoincrement 된다.
+        @PrimaryKey(autoGenerate = true)
+        private int seq;
+        private String word;
+
+        public WordVO() {
+        }
+
+
+        public WordVO(int seq, String word) {
+                this.seq = seq;
+                this.word = word;
+        }
+
+
+
+        public int getSeq() {
+                return seq;
+        }
+
+        public void setSeq(int seq) {
+                this.seq = seq;
+        }
+
+        public String getWord() {
+                return word;
+        }
+
+        public void setWord(String word) {
+                this.word = word;
+        }
+
+        @Override
+        public String toString() {
+                return "WordVO{" +
+                        "seq=" + seq +
+                        ", word='" + word + '\'' +
+                        '}';
+        }
+
+}
