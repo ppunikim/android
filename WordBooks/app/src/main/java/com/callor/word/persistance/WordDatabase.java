@@ -2,9 +2,11 @@ package com.callor.word.persistance;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.callor.word.model.WordVO;
 
@@ -34,7 +36,8 @@ public abstract class WordDatabase extends RoomDatabase{
     private static volatile WordDatabase DB_CONN;
 
     //이 변수 선언문 이후의 method 는 thread 환경에서 background 로 실행하라.
-    public static final ExecutorService databaseExcutor = Executors.newFixedThreadPool(3);
+    public static final ExecutorService databaseExcutor =
+            Executors.newFixedThreadPool(3);
 
     
     /* SingleTone 객체 선언
@@ -46,11 +49,39 @@ public abstract class WordDatabase extends RoomDatabase{
             synchronized (WordDatabase.class) {
                 if(DB_CONN == null) {
                     DB_CONN = Room.databaseBuilder(context.getApplicationContext(),
-                            WordDatabase.class,"wordDB").build();
+                            WordDatabase.class,"wordDB").
+                            //샘플데이터 추가해 데이터가 잘 들어오는지 확인하는 과정이다.
+                            fallbackToDestructiveMigration().
+                            addCallback(roomCallBack).
+                            build();
                 }
             }
         }
         return DB_CONN;
-    }
+    }//end getInstance
+
+    //인터페이스로 직접 내부객체 생성하기
+    private static final RoomDatabase.Callback roomCallBack
+                                = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+            databaseExcutor.execute(
+                    //ramda
+                    ()->{
+                        WordDao wordDao = DB_CONN.wordDao();
+                        wordDao.deleteAll();
+
+                        WordVO wordVO = new WordVO(1L,"ppuni");
+                        wordDao.insert(wordVO);
+
+                        wordDao.insert(new WordVO(2L,"cute"));
+                        wordDao.insert(new WordVO(3L,"pretty"));
+                    }
+            );
+        }
+    };
+
+
 
 }

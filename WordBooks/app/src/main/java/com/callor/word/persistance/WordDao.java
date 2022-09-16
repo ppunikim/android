@@ -24,6 +24,9 @@ public interface WordDao {
        OnConflictStrategy.ROLLBACK : 되돌리기
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    public Runnable insert(WordVO wordVO);
+    public void insert(WordVO wordVO);
+
+    @Query("DELETE FROM tbl_words")
+    void deleteAll();
 
 }

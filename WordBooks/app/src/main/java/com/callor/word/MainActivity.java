@@ -43,13 +43,18 @@ public class MainActivity extends AppCompatActivity {
         //화면을 그리는데 필요한 요소가 있다.
         setContentView(R.layout.activity_main);
 
-        /* ViewModel 활용해
-        tbl_words 데이터베이스로부터 SELECT ALL 수행하라.
+        /*
+        lifeCycle.ViewModelProvider 를 사용해 
+        WordViewModel 클래스를 객체로 생성해 viewModel 에 세팅하기
          */
         viewModel = new ViewModelProvider
                 .AndroidViewModelFactory(this.getApplication())
                 .create(WordViewModel.class);
-
+        
+        /* ViewModel 활용해
+        tbl_words 데이터베이스로부터 SELECT ALL 수행하라.
+        insert 된가 동시에 바로 update 하라는 코드가 observer 이다.
+         */
         viewModel.selectAll().observe(this,
 
                 //람다방식의 코드이다.
@@ -76,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                         "이미지 변경할래?",
                         Toast.LENGTH_SHORT).show();
 
-                String word = String.format("뿌니 %d", Math.floor(Math.random() * 100),0);
+                String word = String.format("뿌니 %d", (int)Math.floor(Math.random() * 100));
                 WordVO wordVO = new WordVO(0,word);
                 viewModel.insert(wordVO);
 

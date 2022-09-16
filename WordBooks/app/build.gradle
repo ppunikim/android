@@ -34,13 +34,21 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.room:room-common:2.4.3'
 
+
+    // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-viewmodel
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifeCycleVersion"
+    // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-livedata
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifeCycleVersion"
+
+
+
+
     // https://mvnrepository.com/artifact/androidx.room/room-common
     implementation "androidx.room:room-common:$roomVersion"
     // https://mvnrepository.com/artifact/androidx.room/room-runtime
     implementation "androidx.room:room-runtime:$roomVersion"
     // https://mvnrepository.com/artifact/androidx.room/room-compiler
     annotationProcessor "androidx.room:room-compiler:$roomVersion"
-
 
 
     testImplementation 'junit:junit:4.13.2'
