@@ -1,9 +1,16 @@
 package com.callor.todo;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
+import android.speech.RecognizerIntent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,12 +47,40 @@ public class FirstFragment extends Fragment {
         binding.heartImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Navigation
+//                        .findNavController(view)
+//                        .navigate(R.id.action_firstFragment_to_secondFragment);
+
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"말해봐");
+                activityResult.launch(intent);
 
             }
         });
 
         return view;
-    }
+    }//end onCreateView
+
+    private ActivityResultLauncher<Intent> activityResult
+            = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+
+                // 외부 Activity 를 호출하고, 그 Activity 가 보내주는 데이터를 수신하는 method
+                @Override
+                public void onActivityResult(ActivityResult result) {
+
+                }
+            }
+    );
+
+
+
+
+
+
 
     /* 주의사항!(onDestroyView 사용이유)
        viewBinding 방식으로 Fragment 를 사용할 때
