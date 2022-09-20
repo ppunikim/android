@@ -1,5 +1,6 @@
 package com.callor.todo;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,6 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.callor.todo.databinding.FragmentFirstBinding;
+
+import java.util.Arrays;
+import java.util.List;
+
+import javax.xml.transform.Result;
 
 /* findViewById 에 비해 viewBinding 방식 사용 장점
     1. Null PointException 에서 비교적 안전함.
@@ -51,10 +57,17 @@ public class FirstFragment extends Fragment {
 //                        .findNavController(view)
 //                        .navigate(R.id.action_firstFragment_to_secondFragment);
 
+                //폰에 내장된 음성인식 기능 사용하기 위한 준비
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                
+                //한글 등 언어에 관계없이 인식해달라는 말.
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                
+                //STT(말하는 마이크 역할) 가 시작 됐을 때 이것을 보여달라는 말
                 intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"말해봐");
+
+                //이제 시작하라.
                 activityResult.launch(intent);
 
             }
@@ -62,6 +75,7 @@ public class FirstFragment extends Fragment {
 
         return view;
     }//end onCreateView
+
 
     private ActivityResultLauncher<Intent> activityResult
             = registerForActivityResult(
@@ -72,6 +86,15 @@ public class FirstFragment extends Fragment {
                 @Override
                 public void onActivityResult(ActivityResult result) {
 
+                    //정상적으로 음성인식 돼 text 가 return 되면,
+                    if(result.getResultCode() == Activity.RESULT_OK) {
+                        List<String> strText = result
+                                .getData()
+                                .getStringArrayListExtra(
+                                        RecognizerIntent.EXTRA_RESULTS
+                                );
+                                binding.txt.setText(strText.get(0));
+                    }
                 }
             }
     );
