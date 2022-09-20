@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- drawable Resource 를 터치했을 때(hover) 색이 변하도록 하는 것.
+     즉, 두개가 번갈아 보여준다.
+     이것을 사용하려면 selector 로 감싸진 parent 파일 생성하기
+-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_baseline_favorite_yellow"
+        android:state_pressed="true"/>
+    <item android:drawable="@drawable/ic_baseline_favorite_pink"/>
+</selector>
+
+<!--
+    android:state_pressed="true" 로 설정한 item 은 터치 후 보여줄 아이콘이다.
+-->

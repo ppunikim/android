@@ -1,0 +1,75 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.callor.todo"
+        minSdk 23
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    /* Android Studio 3.0 이상에서 사용할 수 있는 옵션이다.
+
+    이때까지는 findViewById 함수를 사용하여 view 와 layout 위젯들을
+     Activity Class 에서 핸들링 했는데,
+    이 옵션(ViewBinding)을 추가하면서 클래스 타입으로 핸들링이 가능해졌다.(가상으로 생김)
+     즉, layout/activity_main.xml 파일을 basePackage.dataBinding.ActivityMainBinding 클래스로 생성해 준다.
+
+    결론적으로, findByView 로 쓰지 않아도 클래스를 가상으로 만들 수 있다.
+     */
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+
+    // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-viewmodel
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifeCycleVersion"
+    // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-livedata
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifeCycleVersion"
+
+
+    /*  Android Arch 에서 새롭게 만들어지는 Fragment 이동 메뉴시스템
+        과거에는 fragment 간 이동을 코드로 구현하고, 상당히 복잡한 과정을 했는데,
+        현재는 navigation system 을 사용해 비교적 쉽게 사용가능하다.
+     */
+    // https://mvnrepository.com/artifact/androidx.navigation/navigation-fragment
+    implementation "androidx.navigation:navigation-fragment:$navVersion"
+    // https://mvnrepository.com/artifact/androidx.navigation/navigation-ui
+    implementation "androidx.navigation:navigation-ui:$navVersion"
+
+
+
+
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
